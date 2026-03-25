@@ -1,116 +1,200 @@
 # CRUD App - Backend
 
-This is the backend API for a CRUD application built using Node.js, Express, and MongoDB. It handles all data operations and serves RESTful endpoints.
+This is the backend API for a simple CRUD application built using Node.js, Express, and MongoDB (Mongoose). It provides endpoints to create, read, and update items.
+
+---
 
 ## 🚀 Features
 
-* Create item (POST)
-* Read items (GET)
-* Update item (PUT)
-* REST API structure
-* MongoDB integration
+* Get all items (GET)
+* Create a new item (POST)
+* Update an item (PUT)
+* MongoDB connection using Mongoose
+* Environment variable configuration with dotenv
+
+---
 
 ## 🛠️ Tech Stack
 
 * Node.js
 * Express.js
-* MongoDB (Mongoose)
-* CORS
+* MongoDB
+* Mongoose
 * dotenv
+* CORS
+
+---
 
 ## 📂 Project Structure
 
-```
+```id="8c1s9l"
 backend/
+│-- config/
+│   └── db.js          # MongoDB connection
 │-- models/
+│   └── Item.js        # Item schema
 │-- routes/
-│-- controllers/
-│-- server.js
+│   └── items.js       # API routes
+│-- .env               # Environment variables
+│-- server.js          # Entry point
 │-- package.json
 ```
+
+---
 
 ## ⚙️ Installation & Setup
 
 1. Clone the repository:
 
-```
+```id="g6wqpb"
 git clone https://github.com/your-username/backend-repo.git
 ```
 
-2. Navigate to the project:
+2. Navigate into the project:
 
-```
+```id="s9bn4q"
 cd backend-repo
 ```
 
 3. Install dependencies:
 
-```
+```id="d8b3zz"
 npm install
 ```
 
 4. Create a `.env` file:
 
-```
+```id="m1y1cb"
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
 ```
 
 5. Start the server:
 
-```
+```id="3cl8h2"
 npm start
 ```
 
+Server will run on:
+
+```id="6eqf3y"
+http://localhost:5000
+```
+
+---
+
+## 🔌 MongoDB Connection (config/db.js)
+
+Handles database connection using Mongoose.
+
+```id="0qj0tz"
+const mongoose = require('mongoose');
+
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URI);
+    console.log('MongoDB Connected');
+  } catch (err) {
+    console.error(err.message);
+    process.exit(1);
+  }
+};
+
+module.exports = connectDB;
+```
+
+---
+
+## 📦 Item Model (models/Item.js)
+
+```id="c1c0l2"
+const mongoose = require('mongoose');
+
+const ItemSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  description: { type: String, required: true }
+}, { timestamps: true });
+
+module.exports = mongoose.model('Item', ItemSchema);
+```
+
+---
+
 ## 📡 API Endpoints
 
-### Get all items
+### 🔹 Get All Items
 
-```
-GET /api/items
-```
+**GET** `/items`
 
-### Create item
+---
 
-```
-POST /api/items
-Body:
+### 🔹 Create Item
+
+**POST** `/items`
+
+Request Body:
+
+```id="2b5r7m"
 {
   "name": "Item Name",
   "description": "Item Description"
 }
 ```
 
-### Update item
+* Returns `400` if fields are missing
 
-```
-PUT /api/items/:id
-Body:
+---
+
+### 🔹 Update Item
+
+**PUT** `/items/:id`
+
+Request Body:
+
+```id="1ch5xw"
 {
   "name": "Updated Name",
   "description": "Updated Description"
 }
 ```
 
-## 🧪 Testing API
+* Returns `404` if item not found
 
-You can use:
+---
+
+## 🧪 Testing
+
+You can test APIs using:
 
 * Postman
 * Thunder Client
 * Curl
 
+---
+
+## ❗ Error Handling
+
+* `500` – Server error
+* `400` – Missing required fields
+* `404` – Item not found
+
+---
+
 ## 🧠 Future Improvements
 
 * Add DELETE endpoint
-* Input validation
-* Authentication (JWT)
-* Error handling middleware
+* Add validation library (Joi / express-validator)
+* Add authentication (JWT)
+* Pagination & filtering
+
+---
 
 ## 👨‍💻 Author
 
 Your Name
 
+---
+
 ## 📄 License
 
-This project is licensed under the MIT License.
+MIT License

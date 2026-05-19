@@ -9,7 +9,7 @@ connectDB();
 const app = express();
 const allowedOrigins = [
   "http://localhost:3000",
-  "https://trainee_frontend.azurestaticapps.net"
+  "https://thankful-flower-02a09de00.7.azurestaticapps.net"
 ];
 
 app.use(cors({

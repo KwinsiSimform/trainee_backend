@@ -7,9 +7,19 @@ dotenv.config();
 connectDB();
 
 const app = express();
-app.use(cors());
-app.use(express.json());
+const allowedOrigins = [
+  "http://localhost:3000",
+  "https://trainee_frontend.azurestaticapps.net"
+];
 
+app.use(cors({
+  origin: allowedOrigins
+}));
+// app.use(cors());
+app.use(express.json());
+app.get("/", (req, res) => {
+  res.send("API is running");
+});
 app.use('/items', require('./routes/items'));
 
 const PORT = process.env.PORT || 5000;

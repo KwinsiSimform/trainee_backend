@@ -7,13 +7,11 @@ dotenv.config();
 connectDB();
 
 const app = express();
-const allowedOrigins = [
-  "https://thankful-flower-02a09de00.7.azurestaticapps.net"
-];
+// const allowedOrigins = [
+//   "https://thankful-flower-02a09de00.7.azurestaticapps.net"
+// ];
 
-app.use(cors({
-  origin: allowedOrigins
-}));
+app.use(cors());
 // app.use(cors());
 app.use(express.json());
 app.get("/", (req, res) => {
